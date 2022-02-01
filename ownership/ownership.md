@@ -43,7 +43,7 @@ fn main() {
 
 ## ownership & functions
 
-- non-stack data is passed to functions is by **move** and the stack-data is copied
+- non-stack data is passed to functions by **move** while the stack-data is copied
 
 ```rust
 fn main() {
@@ -65,3 +65,37 @@ fn makes_copy(some_integer: i32) {
     println!("{}", some_integer);
 }
 ```
+
+- same goes for functions that return values, the return value is `moved` into the caller
+
+## references and borrowing
+
+- instead of `moving` values, we can pass it's `reference` to a function and can continue using the value in the caller
+- `references` are pointers guaranteed to point to a valid value
+- reference of a vlaue is sent using `&` operator and the receiver stores it in a pointer of type `&type`
+
+```rust
+fn main() {
+    let s1 = String::from("hello");
+
+    let len = calculate_length(&s1);
+
+    println!("The length of '{}' is {}.", s1, len);
+}
+
+fn calculate_length(s: &String) -> usize {
+    s.len()
+}
+```
+
+- process of creating a reference and using it in other function is called borrowing
+- by default borrowers are not allowed to mutate the values
+
+## mutable references
+- mutable references are created using `&mut <variable>` and accepted in `&mut <data_type>`
+- only one mutable reference can created in a single scope
+- immutable reference and then mutable reference is not allowed if immutable one is still in scope
+
+## slice type
+- if want reference to a specific part of string, we can use slice reference `&<variable>[start_index..end_index]`
+- 
